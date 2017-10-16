@@ -1,3 +1,4 @@
+REGISTER ./GetNameAndHit.jar
 records = LOAD '$input' using PigStorage('\t');
 datetime = CurrentTime();
 precords = FOREACH records GENERATE GetName($7), GetHit($13) AS (name:chararray,result:int);
