@@ -7,7 +7,11 @@ public class GetName extends PrimitiveEvalFunc<String, String> {
 	@Override
 	public String exec(String in) throws IOException {
 		String[] tokens = in.split("/");
-		return tokens[0];
+		if (tokens[0].equals("blog")){
+			return tokens[1];
+		}
+		
+		return null;
 	}
 
 }
