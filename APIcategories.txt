@@ -9,7 +9,7 @@ date	string
 description	string
 district	string
 domestic	boolean
-fbi_code	int
+fbi_code	string
 id	int
 iucr	int
 latitute	double
