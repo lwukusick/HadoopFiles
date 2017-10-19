@@ -4,6 +4,7 @@ arrest	boolean
 beat	string
 block	string
 case_number	string
+community_area int
 date	string
 description	string
 district	string
@@ -17,6 +18,7 @@ location_description	string
 longitute	double
 primary_type	string
 updated_on	string
+ward	int
 x_coordinate	int
 y-coordinate	int
 year	int
