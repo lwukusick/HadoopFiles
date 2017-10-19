@@ -1,0 +1,22 @@
+https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=10&$offset=500000&$order=id&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8
+
+arrest	boolean
+beat	string
+block	string
+case_number	string
+date	string
+description	string
+district	string
+domestic	boolean
+fbi_code	int
+id	int
+iucr	int
+latitute	double
+location	string
+location_description	string
+longitute	double
+primary_type	string
+updated_on	string
+x_coordinate	int
+y-coordinate	int
+year	int
