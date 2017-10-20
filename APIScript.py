@@ -3,6 +3,10 @@ import requests
 import subprocess
 # 129 for 6.45M entries
 # limit = 50000 #(the max)
+
+def removeArray(content):
+	return content[1:-1]
+
 print("STARTING API DOWNLOAD WITH PYTHON")
 file = open("CrimeTotal.json","w")
 for x in range(0,2):
@@ -22,7 +26,8 @@ for x in range(0,2):
 				response = requests.get("https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=%s&$offset=%s&$order=date&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8" % (limit,offset))
 		else:
 			#record data
-			file.write(response.content)
+			cleaned_data = removeArray(response.text)
+			file.write(cleaned_data)
 			flag = False # just in case
 			break
 
