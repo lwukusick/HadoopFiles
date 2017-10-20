@@ -5,18 +5,29 @@ import subprocess
 # loops = 130
 
 def removeArray(content):
-	#return content[1:-2]
-	removed_brackets = content.replace("[", "").replace("]", "")
-	return removed_brackets.replace("\n,", "\n")
+	return content[1:-2].replace("\n,", "\n")
 
-limit = 50000 #(the max)
+# def getLastOffset():
+# 	try:
+# 		file = open("OffsetFile")
+# 	except:
+# 		file = open("file","w")
+# 		file.write("0")
+# 	else:
+# 		file = open("OffsetFile")
+# 	return file.readline()
+
+# initialOffset = getLastOffset()
+# file.close()
+limit = 5 #(the max)
 offset_K = limit
 whileloopflag = True
 x = 0
 print("STARTING API DOWNLOAD WITH PYTHON")
 
 file = open("CrimeTotal.json","w")
-while whileloopflag:
+# while whileloopflag:
+for x in range(0,2):
 	offset = offset_K*x
 	x = x + 1
 	recount = 0
@@ -36,7 +47,7 @@ while whileloopflag:
 			if len(response.content) == 3:
 				whileloopflag = False
 			cleaned_data = removeArray(response.text)
-			file.write(cleaned_data)
+			file.write("%s\n" % cleaned_data)
 			flag = False # just in case
 			break
 
@@ -44,6 +55,6 @@ while whileloopflag:
 file.close()
 print("COMPLETED API DOWNLOAD WITH PYTHON")
 bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/CrimeTotal.json"
-print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING %s" % bashCommand)
+print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING: %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
