@@ -6,7 +6,8 @@ import subprocess
 
 def removeArray(content):
 	#return content[1:-2]
-	return content.replace("[", "").replace("]", "")
+	removed_brackets = content.replace("[", "").replace("]", "")
+	return removed_brackets.replace("\n", "")
 
 
 print("STARTING API DOWNLOAD WITH PYTHON")
