@@ -1,0 +1,2 @@
+crime_data = LOAD '$input' USING JsonLoader('arrest:int, beat:int, block:chararray, case_number:chararray, community_area':int, data:chararray, description:chararray, district:chararray, domestic:int, fbi_code:chararray, id:int, iucr:int, latitude:double, location: {type: chararray, coordinates: [lat: double, lng:double]}, location_description:chararray, longitude:double, primary_type:chararray, x_coordinate:int, y_coordinate:int, updated_on:chararray, ward:int, year:int);
+STORE crime_data INTO '$output/cleaned_crime_data.json' USING JsonStorage();
