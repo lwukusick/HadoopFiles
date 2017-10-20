@@ -5,7 +5,7 @@ import subprocess
 # limit = 50000 #(the max)
 
 def removeArray(content):
-	return content[1:-1]
+	return content[1:-2]
 
 print("STARTING API DOWNLOAD WITH PYTHON")
 file = open("CrimeTotal.json","w")
