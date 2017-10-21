@@ -1,5 +1,5 @@
 ADD JAR ./StripUpper.jar;
-CREATE temporary function Strip as 'edu.rosehulman.wukusil.Split';
+CREATE temporary function Strip as 'edu.rosehulman.wukusil.Strip';
 CREATE temporary function Upper as 'edu.rosehulman.wukusil.Upper';
 
 CREATE DATABASE IF NOT EXISTS ${hiveconf:databaseName};
