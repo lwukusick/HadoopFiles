@@ -11,5 +11,5 @@ STORED AS TEXTFILE
 LOCATION '${hiveconf:inputLocation}';
 
 SELECT word, COUNT(*)
-FROM ${hiveconf:tableName} LATERAL VIEW explode(Strip(Upper(split(line," ")))) flatTable AS word
+FROM ${hiveconf:tableName} LATERAL VIEW explode(split(Strip(Upper(line)), " ")) flatTable AS word
 GROUP BY word;
