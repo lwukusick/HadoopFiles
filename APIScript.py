@@ -19,7 +19,7 @@ def removeArray(content):
 
 # initialOffset = getLastOffset()
 # file.close()
-limit = 5 #(the max)
+limit = 1000 #(the max)
 offset_K = limit
 whileloopflag = True
 x = 0
@@ -54,7 +54,7 @@ for x in range(0,2):
 	# print(response.content)
 file.close()
 print("COMPLETED API DOWNLOAD WITH PYTHON")
-bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/CrimeTotal.json"
+bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/data/CrimeTotal.json"
 print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING: %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
