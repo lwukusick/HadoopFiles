@@ -9,4 +9,4 @@ fbi_code string
 )
 ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
 STORED AS TEXTFILE
-LOCATION  '/tmp/data/';
+LOCATION  '/tmp/data/crime/';
