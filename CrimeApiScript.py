@@ -58,3 +58,8 @@ bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/data/crime/CrimeTotal.json
 print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING: %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
+
+print("CLEANING UP")
+bashCommand = "rm CrimeTotal.json"
+process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+output, error = process.communicate()
