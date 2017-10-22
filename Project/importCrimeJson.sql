@@ -1,7 +1,7 @@
 CREATE EXTERNAL TABLE crimeData 
 (
-latitude double,
-longitude double,
+latitude string,
+longitude string,
 description string,
 arrest boolean,
 domestic boolean,
