@@ -9,15 +9,18 @@ def removeArray(content):
 	removed_brackets = content.replace("[", "").replace("]", "")
 	return removed_brackets.replace("\n,", "\n")
 
+fileName = "CrimeTotalSample.json"
 
 print("STARTING API DOWNLOAD WITH PYTHON")
-file = open("CrimeTotal.json","w")
-for x in range(0,2):
-	offset = 5*x
-	limit = 5
+file = open(fileName,"w")
+for x in range(1,2):
+	offset = 500*x
+	limit = 1
 	recount = 0
 	flag = True
-	response = requests.get("https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=%s&$offset=%s&$order=date&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8" % (limit,offset))
+	url = "https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=%s&$offset=%s&$order=date&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8" % (limit,offset)
+	print(url)
+	response = requests.get(url)
 	status = response.status_code 
 	while flag:
 		if status != 200:
@@ -38,7 +41,7 @@ for x in range(0,2):
 	# print(response.content)
 file.close()
 print("COMPLETED API DOWNLOAD WITH PYTHON")
-bashCommand = "hadoop fs -put CrimeTotal.json /tmp/data/CrimeTotal.json"
+bashCommand = "hadoop fs -put -f {} /tmp/data/{}".format(fileName, fileName)
 print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
