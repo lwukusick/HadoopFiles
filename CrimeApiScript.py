@@ -7,28 +7,34 @@ import subprocess
 def removeArray(content):
 	return content[1:-2].replace("\n,", "\n")
 
-# def getLastOffset():
-# 	try:
-# 		file = open("OffsetFile")
-# 	except:
-# 		file = open("file","w")
-# 		file.write("0")
-# 	else:
-# 		file = open("OffsetFile")
-# 	return file.readline()
+try:
+	print("OFFSET FILE FOUND")
+	offsetFile = open("OffsetFile.txt","r")
+	offsetFile.close()
+except:
+	print("NO OFFSET FILE FOUND. DOWNLOADING ENTIRE DATABASE")
+	offsetFile = open("OffsetFile.txt","w")
+	offsetFile.write("0")
+	offsetFile.close()
+	print("MADE NEW FILE")
 
-# initialOffset = getLastOffset()
-# file.close()
+offsetFile = open("OffsetFile.txt","r")
+initialOffset = int(offsetFile.readline())
+offsetFile.close()
+print("INITIAL OFFSET: %d" % initialOffset)
+
+### Initialization Values ###
 limit = 1000 #(the max)
 offset_K = limit
 whileloopflag = True
 x = 0
-print("STARTING API DOWNLOAD WITH PYTHON")
+recordWriteFile = "CrimeTotal.json"
+print("STARTING API DOWNLOAD WITH PYTHON, WRITING TO %s" % recordWriteFile)
 
-file = open("CrimeTotal.json","w")
+writeFile = open(recordWriteFile,"w")
 # while whileloopflag:
 for x in range(0,2):
-	offset = offset_K*x
+	offset = offset_K*x + initialOffset
 	x = x + 1
 	recount = 0
 	flag = True
@@ -47,19 +53,31 @@ for x in range(0,2):
 			if len(response.content) == 3:
 				whileloopflag = False
 			cleaned_data = removeArray(response.text)
-			file.write("%s\n" % cleaned_data)
+			writeFile.write("%s\n" % cleaned_data)
 			flag = False # just in case
 			break
 
 	# print(response.content)
-file.close()
+
+print("CLOSING %s" % recordWriteFile)
+writeFile.close()
+
+# TODO make offset saving more accurate
+# calc_offset = offset + cleaned_data.count('crime')
+
+print("SAVING %s TO OFFSET FILE" % str(offset))
+offsetFile = open("OffsetFile.txt","w")
+offsetFile.write(str(offset))
+offsetFile.close()
+
 print("COMPLETED API DOWNLOAD WITH PYTHON")
-bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/data/crime/CrimeTotal.json"
+
+bashCommand = "hadoop fs -put -f %s /tmp/data/crime/%s" % (recordWriteFile,recordWriteFile)
 print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING: %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
 
-print("CLEANING UP")
-bashCommand = "rm CrimeTotal.json"
+bashCommand = "rm %s" % recordWriteFile
+print("CLEANING UP LOCAL FILES USING: %s" % bashCommand)
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
