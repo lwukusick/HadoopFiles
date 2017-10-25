@@ -7,7 +7,6 @@ import subprocess
 def removeArray(content):
 	return content[1:-2].replace("\n,", "\n")
 
-fileName = "CrimeTotalSample.json"
 # def getLastOffset():
 # 	try:
 # 		file = open("OffsetFile")
@@ -25,15 +24,15 @@ offset_K = limit
 whileloopflag = True
 x = 0
 print("STARTING API DOWNLOAD WITH PYTHON")
-file = open(fileName,"w")
-for x in range(1,2):
+
+file = open("CrimeTotal.json","w")
+# while whileloopflag:
+for x in range(0,2):
 	offset = offset_K*x
 	x = x + 1
 	recount = 0
 	flag = True
-	url = "https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=%s&$offset=%s&$order=date&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8" % (limit,offset)
-	print(url)
-	response = requests.get(url)
+	response = requests.get("https://data.cityofchicago.org/resource/6zsd-86xi.json?$limit=%s&$offset=%s&$order=date&$$app_token=CwFNFRUwnqGC8LqCmVWONgGE8" % (limit,offset))
 	status = response.status_code 
 	while flag:
 		if status != 200:
@@ -55,7 +54,12 @@ for x in range(1,2):
 	# print(response.content)
 file.close()
 print("COMPLETED API DOWNLOAD WITH PYTHON")
-bashCommand = "hadoop fs -put -f {} /tmp/data/{}".format(fileName, fileName)
-print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING %s" % bashCommand)
+bashCommand = "hadoop fs -put -f CrimeTotal.json /tmp/data/crime/CrimeTotal.json"
+print("STARTING HADOOP DISTRIUBUTED FILE SYSTEM TRANSFER USING: %s" % bashCommand)
+process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+output, error = process.communicate()
+
+print("CLEANING UP")
+bashCommand = "rm CrimeTotal.json"
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
