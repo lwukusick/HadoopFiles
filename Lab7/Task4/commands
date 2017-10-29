@@ -1,0 +1,4 @@
+mkdir /tmp/wukusil
+cp TextInterceptor.jar /tmp/wukusil/
+
+flume-ng agent --conf-file task4.conf --name a1 --classpath /tmp/wukusilTextInterceptor.jar -Xmx4096m -Xms2048m
