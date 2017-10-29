@@ -1,3 +1,3 @@
-sqoop export --connect jdbc:mysql://$1/sqooptest --password hadoop --username root -m 12 --table EmployeeExportData --export-dir /tmp/sqoop/Employees
+sqoop export --connect jdbc:mysql://$1/sqooptest --username root -m 1 --input-null-string 'This is a Null String' --table EmployeesExportData --export-dir /tmp/sqoop/Employees
 
-sqoop export --connect jdbc:mysql://$1/sqooptest --password hadoop --username root -m 12 --table EmployeeExportData --export-dir /tmp/sqoop/Employees --update-key eid --update-mode allowinsert
+sqoop export --connect jdbc:mysql://$1/sqooptest --username root -m 1 --input-null-string 'This is a Null String' --table EmployeesExportData --export-dir /tmp/sqoop/Employees --update-key eid --update-mode allowinsert
