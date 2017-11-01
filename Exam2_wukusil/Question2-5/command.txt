@@ -15,4 +15,4 @@ hive -hiveconf databaseName=exam -hiveconf tempTableName=tempTable -hiveconf tab
 select cno, COUNT(*) from examData where and grade != "D" GROUP BY cno HAVING COUNT(*) >= 2;
 
 # Sqoop command (Q5)
-sqoop export --connect jdbc:<connection string> --username root --password <password> -m 1 --table examData --hcatalog-table examData --input-fields-terminated-by "\t" --hcatalog-partition-keys username --hcatalog-parition-values wukusil
+sqoop export --connect jdbc:<connection string> --username root --password <password> -m 1 --table examTest --hcatalog-table examData --hcatalog-database <Hive database> --input-fields-terminated-by "\t" --hcatalog-partition-keys username --hcatalog-partition-values "wukusil" --input-lines-terminated-by "\n"
