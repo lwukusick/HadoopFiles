@@ -8,11 +8,11 @@ pig -p courseInput=/tmp/input/courses.txt -p gradeInput=/tmp/input/grades.txt -p
 # Hive commands (Q3)
 hive -hiveconf databaseName=exam -hiveconf tempTableName=tempTable -hiveconf tableName=examData -f hiveCreate.hql
 
-hive -hiveconf databaseName=exam -hiveconf tempTableName=tempTable -hiveconf tableName=examData -hiveconf pigOutput=/tmp/exam2PigOut/ -hiveconf username=wukusil -f hiveCreate.hql
+hive -hiveconf databaseName=exam -hiveconf tempTableName=tempTable -hiveconf tableName=examData -hiveconf pigOutput=/tmp/exam2PigOut/ -hiveconf username=wukusil -f hiveInsert.hql
  
 
 # Hive query (Q4)
-hive -e 'select cno, COUNT(*) from examData where and grade != "D" GROUP BY cno HAVING COUNT(*) >= 2;'
+select cno, COUNT(*) from examData where and grade != "D" GROUP BY cno HAVING COUNT(*) >= 2;
 
 # Sqoop command (Q5)
 sqoop export --connect jdbc:<connection string> --username root --password <password> -m 1 --table examData --hcatalog-table examData --input-fields-terminated-by "\t" --hcatalog-partition-keys username --hcatalog-parition-values wukusil
