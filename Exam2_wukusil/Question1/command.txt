@@ -1,0 +1,4 @@
+mkdir /tmp/wukusil/
+cp TimeInterceptor.jar /tmp/wukusil
+
+flume-ng agent --conf-file wukusilagentinterceptor.conf --name a1 --classpath /tmp/wukusil/TimeInterceptor.jar -Xmx4096m -Xms2048m

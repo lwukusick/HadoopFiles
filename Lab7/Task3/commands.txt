@@ -1,0 +1,1 @@
+flume-ng agent --conf-file task3Wukusil.conf --name a1 -Xmx4096m -Xms2048m
