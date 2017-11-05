@@ -1,0 +1,35 @@
+<workflow-app name="OozieHiveSqoop" xmlns="uri:oozie:workflow:0.4">
+    <start to="Export"/>
+    <action name="Export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+              <job-xml>/tmp/deploy/OozieHiveSqoop/hive-site.xml</job-xml>
+            <arg>export</arg>
+            <arg>--connect</arg>
+            <arg>jdbc:mysql://sandbox.hortonworks.com:3306/${mysqldatabasename}</arg>
+            <arg>--username</arg>
+            <arg>root</arg>
+            <arg>--password</arg>
+            <arg>hadoop</arg>
+            <arg>-m</arg>
+            <arg>1</arg>            
+            <arg>--table</arg>
+            <arg>${mysqltablename}</arg>
+            <arg>--driver</arg>
+            <arg>com.mysql.jdbc.Driver</arg>
+            <arg>--hcatalog-database</arg>
+            <arg>default</arg>
+            <arg>--hcatalog-table</arg>
+            <arg>${hivetablename}</arg>
+            <arg>--skip-dist-cache</arg>
+            <!-- <arg></arg> -->
+        </sqoop>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
