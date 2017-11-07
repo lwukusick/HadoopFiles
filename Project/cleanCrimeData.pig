@@ -2,7 +2,7 @@ REGISTER elephant-bird-pig-4.15.jar;
 REGISTER elephant-bird-core-4.15.jar;
 REGISTER elephant-bird-hadoop-compat-4.15.jar;
 REGISTER json-simple-1.1.1.jar;
-REGISTER SafePigUDF-1.jar
+REGISTER SafePigUDF-2.jar
 DEFINE JsonLoader com.twitter.elephantbird.pig.load.JsonLoader();
 DEFINE HourUDF edu.rosehulman.bcw.GetHour();
 DEFINE MonthUDF edu.rosehulman.bcw.GetMonth();
