@@ -1,7 +1,7 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS passageData 
 (
 name string,
-multilinestring string
+geometry string
 )
 partitioned by (year int)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'

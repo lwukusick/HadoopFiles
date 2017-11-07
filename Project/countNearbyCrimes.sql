@@ -9,5 +9,5 @@ create temporary function ST_SetSRID as 'com.esri.hadoop.hive.ST_SetSRID';
 
 select passageData.name, COUNT(*) 
 from crimeDataTest, passageData 
-where ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(passageData.multilinestring), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist} and passageData.year == ${hiveconf:year}
+where ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(passageData.geometry), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist} and passageData.year == ${hiveconf:year} and crimeDataTest.year == ${hiveconf:year}
 group by passageData.name;
