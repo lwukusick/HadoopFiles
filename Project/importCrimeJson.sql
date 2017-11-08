@@ -1,5 +1,8 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS crimeData 
 (
+hour int,
+month int,
+year int,
 crimeDate string,
 latitude double,
 longitude double,
