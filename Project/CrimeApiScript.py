@@ -24,7 +24,7 @@ offsetFile.close()
 print("INITIAL OFFSET: %d" % initialOffset)
 
 ### Initialization Values ###
-limit = 1000 #(the max)
+limit = 50000 #(the max)
 offset_K = limit
 whileloopflag = True
 x = 0
@@ -32,8 +32,8 @@ recordWriteFile = "CrimeTotal.json"
 print("STARTING API DOWNLOAD WITH PYTHON, WRITING TO %s" % recordWriteFile)
 
 writeFile = open(recordWriteFile,"w")
-# while whileloopflag:
-for x in range(0,2):
+while whileloopflag:
+# for x in range(0,2):
 	offset = offset_K*x + initialOffset
 	x = x + 1
 	recount = 0
