@@ -34,4 +34,4 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS ORC;
 
 Set hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE yearCrimeData partition(year) select hour, month, crimeData, latitude, longitude, primaryType, description, fbi_code, arrest, domestic from crimeData;
+INSERT INTO TABLE yearCrimeData partition(year) select hour, month, crimeDate, latitude, longitude, primaryType, description, fbi_code, arrest, domestic from crimeData;
