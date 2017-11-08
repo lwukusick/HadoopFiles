@@ -7,7 +7,13 @@ create temporary function ST_GeodesicLengthWGS84 as 'com.esri.hadoop.hive.ST_Geo
 create temporary function ST_DistanceLine as 'ST_DistanceLine';
 create temporary function ST_SetSRID as 'com.esri.hadoop.hive.ST_SetSRID';
 
-select passageData.name, COUNT(*) 
-from crimeDataTest, passageData 
-where ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(passageData.geometry), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist} and passageData.year == ${hiveconf:year} and crimeDataTest.year == ${hiveconf:year}
-group by passageData.name;
+create table if not exists crimeCount(name, count);
+insert overwrite table crimeCount 
+	select passageData.name, COUNT(*) 
+	from crimeDataTest, passageData 
+	where ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(passageData.geometry), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist} 
+		and passageData.year == ${hiveconf:year} 
+		and crimeDataTest.year == ${hiveconf:year}
+	group by passageData.name;
+
+select * from crimeCount order by count ASC limit 1;
