@@ -45,8 +45,8 @@ for key, value in years.iteritems():
 	output, error = process.communicate()
 	print(error)
 
-	#bashCommand = "rm Passage.json"
-	#print("CLEANING UP %s" % key)
-	#process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-	#output, error = process.communicate()
+	bashCommand = "rm Passage.json"
+	print("CLEANING UP %s" % key)
+	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+	output, error = process.communicate()
 
