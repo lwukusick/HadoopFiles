@@ -1,3 +1,6 @@
+set hive.vectorized.execution.enabled=false;
+set hive.vectorized.execution.reduce.enabled=false;
+
 add jar ./esri-geometry-api.jar ./spatial-sdk-hadoop.jar ./DistanceLine.jar;
 
 create temporary function ST_Point as 'com.esri.hadoop.hive.ST_Point';
