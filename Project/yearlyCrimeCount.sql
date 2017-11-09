@@ -32,3 +32,25 @@ insert overwrite table routeCrimesByYear
     OR ((earliestRoutes.geometry RLIKE "multipolygon.*") 
       AND ST_Contains(ST_MultiPolygon(earliestRoutes.geometry), ST_Point(longitude, latitude)))
   group by earliestRoutes.name, yearCrimeData.year;
+
+create table if not exists routeCrimesByYearHour (routeName string, crimeSchoolYear int, crimeHour int, crimeCount int);
+
+insert overwrite table routeCrimesByYearHour
+  select earliestRoutes.name, yearCrimeData.year, yearCrimeData.hour, count(*)
+  from yearCrimeData TABLESAMPLE(20000 ROWS), earliestRoutes
+  where yearCrimeData.year > 506
+    AND ((earliestRoutes.geometry RLIKE "multilinestring.*") 
+      AND ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(earliestRoutes.geometry), ST_Point(longitude, latitude)), 4326)) <= 201)
+    OR ((earliestRoutes.geometry RLIKE "multipolygon.*") 
+      AND ST_Contains(ST_MultiPolygon(earliestRoutes.geometry), ST_Point(longitude, latitude)))
+  group by earliestRoutes.name, yearCrimeData.year, yearCrimeData.hour;
+
+CREATE TABLE IF NOT EXISTS routeCrimeYearAndHour
+(
+year int,
+hour int,
+count int
+)ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+INSERT INTO TABLE routeCrimeYearAndHour select routeCrimesByYearHour.crimeschoolyear, routeCrimesByYearHour.crimehour, COUNT(*) FROM routeCrimesByYearHour group by crimeschoolyear,crimehour;
