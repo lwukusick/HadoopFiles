@@ -2,7 +2,6 @@ CREATE EXTERNAL TABLE IF NOT EXISTS crimeData
 (
 hour int,
 month int,
-year int,
 crimeDate string,
 latitude double,
 longitude double,
@@ -10,7 +9,8 @@ primaryType string,
 description string,
 fbi_code string,
 arrest boolean,
-domestic boolean
+domestic boolean,
+year int
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
@@ -34,4 +34,4 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS ORC;
 
 Set hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE yearCrimeData partition(year) select hour, month, year, crimeDate, latitude, longitude, primaryType, description, fbi_code, arrest, domestic from crimeData;
+INSERT INTO TABLE yearCrimeData partition(year) select hour, month, crimeDate, latitude, longitude, primaryType, description, fbi_code, arrest, domestic, year from crimeData where year is not null;

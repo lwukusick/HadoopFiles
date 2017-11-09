@@ -14,6 +14,7 @@ do
   c) cString=${OPTARG};;
   d) dString=${OPTARG};;
   ?) echo "-${OPTARG} is not a valid flag";;
+  esac
 done
 
 for table in "$@"
