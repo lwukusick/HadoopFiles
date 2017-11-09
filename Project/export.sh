@@ -6,6 +6,7 @@
 ## Usage: ./export.sh [-c <rdbms connection string>] <table name>*
 
 cString="127.0.0.1:3306"
+dString=""
 
 while getopts :cd option
 do
