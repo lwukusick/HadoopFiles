@@ -25,8 +25,9 @@ create table if not exists routeCrimesByYear (routeName string, crimeSchoolYear 
 
 insert overwrite table routeCrimesByYear 
   select earliestRoutes.name, yearCrimeData.year, count(*)
-  from yearCrimeData, earliestRoutes
-  where ((earliestRoutes.geometry RLIKE "multilinestring.*") 
+  from yearCrimeData TABLESAMPLE(20000 ROWS), earliestRoutes
+  where yearCrimeData.year > 506
+    AND ((earliestRoutes.geometry RLIKE "multilinestring.*") 
       AND ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(earliestRoutes.geometry), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist})
     OR ((earliestRoutes.geometry RLIKE "multipolygon.*") 
       AND ST_Contains(ST_MultiPolygon(earliestRoutes.geometry), ST_Point(longitude, latitude)))
