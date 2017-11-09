@@ -26,7 +26,7 @@ STORED AS TEXTFILE;
 
 insert overwrite table routeCrimesByYear 
   select earliestRoutes.name, yearCrimeData.year, count(*)
-  from yearCrimeData TABLESAMPLE(20000 ROWS), earliestRoutes
+  from yearCrimeData, earliestRoutes
   where yearCrimeData.year > 506
     AND ((earliestRoutes.geometry RLIKE "multilinestring.*") 
       AND ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(earliestRoutes.geometry), ST_Point(longitude, latitude)), 4326)) <= ${hiveconf:dist})
@@ -38,7 +38,7 @@ create table if not exists routeCrimesByYearHour (routeName string, crimeSchoolY
 
 insert overwrite table routeCrimesByYearHour
   select earliestRoutes.name, yearCrimeData.year, yearCrimeData.hour, count(*)
-  from yearCrimeData TABLESAMPLE(20000 ROWS), earliestRoutes
+  from yearCrimeData, earliestRoutes
   where yearCrimeData.year > 506
     AND ((earliestRoutes.geometry RLIKE "multilinestring.*") 
       AND ST_GeodesicLengthWGS84(ST_SetSRID(ST_DistanceLine(ST_MultiLineString(earliestRoutes.geometry), ST_Point(longitude, latitude)), 4326)) <= 201)
