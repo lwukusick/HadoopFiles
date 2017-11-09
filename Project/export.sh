@@ -19,5 +19,5 @@ done
 
 for table in "$@"
 do
-  sqoop export --connect jdbc:mysql://${cString}/project --username root -m 1 --table ${table} --hcatalog-table ${table}
+  sqoop export --connect jdbc:mysql://${cString}/project --username root -m 1 --table ${table} --hcatalog-table ${table} --hcatalog-database default --input-fields-terminated-by "${dString}" --input-lines-terminated-by "\n"
 done
