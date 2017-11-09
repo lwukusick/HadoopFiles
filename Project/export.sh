@@ -8,17 +8,17 @@
 cString="127.0.0.1:3306"
 dString=""
 
-while getopts :cd option
-do
+while getopts "c:d:t:" option ;
+do 
   case "${option}"
   in 
   c) cString=${OPTARG};;
   d) dString=${OPTARG};;
-  ?) echo "-${OPTARG} is not a valid flag";;
+  t) tables+=${OPTARG};;
   esac
 done
 
-for table in "$@"
+for table in ${tables} ;
 do
   sqoop export --connect jdbc:mysql://${cString}/project --username root -m 1 --table ${table} --hcatalog-table ${table} --hcatalog-database default --input-fields-terminated-by "${dString}" --input-lines-terminated-by "\n"
 done
