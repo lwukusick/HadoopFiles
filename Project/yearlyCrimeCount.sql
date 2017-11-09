@@ -21,7 +21,8 @@ insert overwrite table earliestRoutes
   On tb2.name=tb1.name
   Where tb2.minYear=tb1.year;
 
-create table if not exists routeCrimesByYear (routeName string, crimeSchoolYear int, crimeCount int);
+create table if not exists routeCrimesByYear (routeName string, crimeSchoolYear int, crimeCount int)
+STORED AS TEXTFILE;
 
 insert overwrite table routeCrimesByYear 
   select earliestRoutes.name, yearCrimeData.year, count(*)
